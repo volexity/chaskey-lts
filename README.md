@@ -22,4 +22,9 @@ For usage instructions use the following input at a python prompt:
 ## TODO
 
 * Implement non-CTR cipher modes
+  * Electronic Code Book (ECB)
+  * Cipher Block Chain (CBC)
+  * Cipher Feedback Mode (CFB)
+  * Output Feedback Mode (OFB)
+  * Galois Counter Mode (GCM)
 * Consider a class based definition of cipher modes to replace the current catch-all implementation
