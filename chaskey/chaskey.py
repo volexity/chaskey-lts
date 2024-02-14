@@ -129,9 +129,10 @@ class Chaskey():
         i = 0
         lenRemaining = len(data)
 
+        counter = self.counter
         # Encrypt buffer
         while lenRemaining:
-            k = self._chaskey_block(True, self.counter)
+            k = self._chaskey_block(True, counter)
 
             lenBlock = 16
             if lenRemaining < 16:
@@ -144,9 +145,9 @@ class Chaskey():
             lenRemaining -= lenBlock
 
             # update counter
-            c = int.from_bytes(self.counter, 'big')
+            c = int.from_bytes(counter, 'big')
             c += 1
-            self.counter = c.to_bytes(16, 'big')
+            counter = c.to_bytes(16, 'big')
 
         return o
 
