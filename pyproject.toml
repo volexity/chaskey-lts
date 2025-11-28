@@ -9,17 +9,20 @@ description = "Pure Python Chaskey LTS implementation"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    { name = "Volexity", email = "threatintel@volexity.com" },
+  { name = "Volexity", email = "threatintel@volexity.com" },
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+keywords = [
+  "chaskey"
 ]
 
 [project.urls]
@@ -27,11 +30,44 @@ Documentation = "https://github.com/volexity/chaskey-lts/blob/main/README.md"
 Issues = "https://github.com/volexity/chaskey-lts/issues"
 Source = "https://github.com/volexity/chaskey-lts"
 
-[tool.hatch.build.hooks.vcs]
-version-file = "chaskey/_version.py"
+[envs.hatch-static-analysis]
+config-path = "none"
 
-[tool.hatch.build.targets.wheel]
-packages = ["chaskey"]
+[tool.coverage.paths]
+chaskey = ["src/chaskey", "*/chaskey-lts/src/chaskey"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.coverage.run]
+source_pkgs = ["chaskey", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/chaskey/_version.py",
+]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/chaskey/_version.py"
+
+[tool.hatch.envs.default]
+extra-dependencies = [
+  "mypy~=1.0",
+]
+
+[tool.hatch.envs.hatch-static-analysis]
+config-path = "none"
+dependencies = ["ruff~=0.13"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/chaskey}"
 
 [tool.hatch.version]
 source = "vcs"
@@ -39,11 +75,22 @@ source = "vcs"
 [tool.ruff]
 line-length = 120
 
-
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "FBT001",
-    "FBT002",
-    "FBT003"
+  "COM812",
+  "ISC001",
+  "FBT001",
+  "FBT002",
+  "FBT003"
 ]
+pydocstyle = { convention = 'google' }
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**/*" = [
+  "D",
+  "S",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["chaskey"]

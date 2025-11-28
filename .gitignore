@@ -1,23 +1,17 @@
+# Python
+*.egg
+*.egg-info/
+*.pyc
+.Python
+.coverage
+.venv
+__pycache__/
+_version.py
+dist/
+
 # OS/Editor Metafiles
 .DS_Store
 .vscode/
 
 # pyenv Metafiles
 .python-version
-
-# Precompiled files
-__pycache__/
-.mypy_cache/
-chaskey/_version.py
-
-# Python distribution / packaging
-build/
-*.egg-info/
-
-# Possible temporary testing files
-*.log
-cli_proxy.py
-samples/*/*
-bin_samples/*
-inst_*
-mod_*
