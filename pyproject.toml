@@ -34,7 +34,7 @@ Source = "https://github.com/volexity/chaskey-lts"
 config-path = "none"
 
 [tool.coverage.paths]
-one_extract = ["src/chaskey", "*/chaskey-lts/src/chaskey"]
+chaskey = ["src/chaskey", "*/chaskey-lts/src/chaskey"]
 
 [tool.coverage.report]
 exclude_lines = [
