@@ -5,8 +5,10 @@
 # pyenv Metafiles
 .python-version
 
-# Precompled files
+# Precompiled files
 __pycache__/
+.mypy_cache/
+chaskey/_version.py
 
 # Python distribution / packaging
 build/
