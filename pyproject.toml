@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chaskey"
+dynamic = ["version"]
+description = "Pure Python Chaskey LTS implementation"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Volexity", email = "threatintel@volexity.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Documentation = "https://github.com/volexity/chaskey-lts/blob/main/README.md"
+Issues = "https://github.com/volexity/chaskey-lts/issues"
+Source = "https://github.com/volexity/chaskey-lts"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "chaskey/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["chaskey"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.ruff]
+line-length = 120
+
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "FBT001",
+    "FBT002",
+    "FBT003"
+]
