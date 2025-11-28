@@ -61,7 +61,7 @@ extra-dependencies = [
 
 [tool.hatch.envs.hatch-static-analysis]
 config-path = "none"
-dependencies = ["ruff~=0.13"]
+dependencies = ["ruff~=0.14"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9"]
