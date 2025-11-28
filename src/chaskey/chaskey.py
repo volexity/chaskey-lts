@@ -6,23 +6,16 @@ import struct
 class Chaskey:
     """Pure python Chaskey-LTS cipher implementation."""
 
-    @staticmethod
-    def _rol(n: int, rot: int, width: int) -> int:
-        return (n << rot % width) & (2**width - 1) | ((n & (2**width - 1)) >> (width - (rot % width)))
-
-    @staticmethod
-    def _ror(n: int, rot: int, width: int) -> int:
-        return ((n & (2**width - 1)) >> rot % width) | (n << (width - (rot % width)) & (2**width - 1))
-
-    def __init__(self, mode: str, key: bytes, *mode_args: dict) -> None:
+    def __init__(self: "Chaskey", mode: str, key: bytes, *mode_args: dict) -> None:
         """Initialize the cipher.
 
+        Notes: Only CTR mode is currently operational
+
         Args:
-            self: Cipher object instance
-            mode (str): Cipher mode. Must be one of 'ecb', 'cbc', 'ofb' ,'cfb',
+            mode: Cipher mode. Must be one of 'ecb', 'cbc', 'ofb' ,'cfb',
                 'cfb8', 'ctr', or 'gcm'.
-            key (bytes): 16-byte key
-            *mode_args (tuple): Parameters unique to mode operation. These are:
+            key: 16-byte key
+            *mode_args: Parameters unique to mode operation. These are:
                 'ecb'
                     None
                 'cbc'
@@ -38,11 +31,6 @@ class Chaskey:
                 'gcm'
                     (0): Counter nonce
                     (1): Validation Tag (ignored by encrypt())
-
-        # Returns:
-            None
-
-        Notes: Only CTR mode is currently operational
 
         """
         self.mode = mode
@@ -60,7 +48,15 @@ class Chaskey:
             msg = "Error: unsupported mode"
             raise ValueError(msg)
 
-    def _chaskey_block(self, enc: bool, buf: bytes) -> bytes:
+    @staticmethod
+    def _rol(n: int, rot: int, width: int) -> int:
+        return (n << rot % width) & (2**width - 1) | ((n & (2**width - 1)) >> (width - (rot % width)))
+
+    @staticmethod
+    def _ror(n: int, rot: int, width: int) -> int:
+        return ((n & (2**width - 1)) >> rot % width) | (n << (width - (rot % width)) & (2**width - 1))
+
+    def _chaskey_block(self: "Chaskey", enc: bool, buf: bytes) -> bytes:
         if len(self.key) < 16 or len(buf) < 16:  # noqa: PLR2004
             return b""
 
@@ -113,7 +109,7 @@ class Chaskey:
             buf = buf + b"\x00" * (16 - len(buf))
         return buf
 
-    def _chaskey_ctr(self, data: bytes) -> bytes:
+    def _chaskey_ctr(self: "Chaskey", data: bytes) -> bytes:
         o = bytearray()
         i = 0
         len_remaining = len(data)
@@ -140,15 +136,14 @@ class Chaskey:
 
         return o
 
-    def encrypt(self, data: bytes) -> bytes:
+    def encrypt(self: "Chaskey", data: bytes) -> bytes:
         """Encrypt data using the initialized cipher.
 
         Args:
-            self: Cipher object instance
-            data (bytes): Data to encrypt
+            data: Data to encrypt
 
         Returns:
-            bytes: Encrypted data buffer
+            Encrypted data buffer
 
         """
         if self.mode == "ctr":
@@ -159,16 +154,14 @@ class Chaskey:
         msg = "Error: unsupported mode"
         raise ValueError(msg)
 
-    def decrypt(self, data: bytes) -> bytes:
+    def decrypt(self: "Chaskey", data: bytes) -> bytes:
         """Decrypt data using the initialized cipher.
 
-        Arguments:
-            self: Cipher object instance
-            data (bytes): Data to decrypt
+        Args:
+            data: Data to decrypt
 
         Returns:
-            bytes: Decrypted data buffer
-
+            Decrypted data buffer
         """
         if self.mode == "ctr":
             if not hasattr(self, "counter"):
