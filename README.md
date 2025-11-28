@@ -4,11 +4,10 @@ A pure Python chaskey cipher implementation developed initially for use with the
 
 ## Installation
 
-You can install donut_decryptor for usage by navigating to the root directory of the project and using pip:
+You can install donut_decryptor for usage using pip:
 
 ```bash
-cd /path/to/donut-decryptor
-python -m pip install .
+python -m pip install chaskey
 ```
 
 For usage instructions use the following input at a python prompt:
