@@ -53,7 +53,8 @@ class Chaskey:
                 msg = "Error: CTR mode requires a nonce"
                 raise ValueError(msg)
             if not isinstance(mode_args[0], (bytes, bytearray)):
-                raise ValueError("Error: CTR mode nonce must be a " + "bytes-like type")
+                msg = "Error: CTR mode nonce must be a bytes-like type"
+                raise ValueError(msg)
             self.counter = mode_args[0]
         else:
             msg = "Error: unsupported mode"
@@ -152,7 +153,8 @@ class Chaskey:
         """
         if self.mode == "ctr":
             if not hasattr(self, "counter"):
-                raise AttributeError("Error: Must have a nonce to encrypt " + "in CTR mode")
+                msg = "Error: Must have a nonce to encrypt in CTR mode"
+                raise AttributeError(msg)
             return self._chaskey_ctr(data)
         msg = "Error: unsupported mode"
         raise ValueError(msg)
@@ -170,7 +172,8 @@ class Chaskey:
         """
         if self.mode == "ctr":
             if not hasattr(self, "counter"):
-                raise AttributeError("Error: Must have a nonce to encrypt " + "in CTR mode")
+                msg = "Error: Must have a nonce to encrypt in CTR mode"
+                raise AttributeError(msg)
             return self._chaskey_ctr(data)
         msg = "Error: unsupported mode"
         raise ValueError(msg)
